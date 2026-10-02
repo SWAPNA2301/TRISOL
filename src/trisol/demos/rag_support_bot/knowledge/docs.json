@@ -1,0 +1,7 @@
+[
+  {"id": "d1", "title": "Refunds", "text": "Customers can request their money back within 30 days of purchase. Approved returns are credited to the original payment method within five business days."},
+  {"id": "d2", "title": "Shipping", "text": "Standard delivery takes three to five working days. Express delivery arrives the next working day when ordered before 2pm."},
+  {"id": "d3", "title": "Accounts", "text": "To reset a password, use the Forgot Password link on the sign-in page. Reset links expire after one hour."},
+  {"id": "d4", "title": "Warranty", "text": "Hardware carries a two year limited warranty covering manufacturing defects but not accidental damage."},
+  {"id": "d5", "title": "Cancellation", "text": "Subscriptions can be cancelled at any time from the billing page and remain active until the end of the paid period."}
+]

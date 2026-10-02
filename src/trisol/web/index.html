@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trisol Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8b13a' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 2v20'/%3E%3Cpath d='M5 4v5a7 7 0 0 0 14 0V4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2v20"/><path d="M5 4v5a7 7 0 0 0 14 0V4"/><path d="M9 17h6"/>
+      </svg>
+      <div>
+        <div class="brand-name">TRISOL</div>
+        <div class="brand-tag">agent lifecycle verification</div>
+      </div>
+    </div>
+    <div class="target">
+      <span class="label">target</span>
+      <span id="target" class="mono">&mdash;</span>
+    </div>
+    <div class="actions">
+      <span id="status" class="status status-idle"><span class="dot"></span><span id="status-text">connecting</span></span>
+      <button id="rerun" class="btn">Re-run audit</button>
+      <button id="theme" class="btn ghost" title="toggle theme" aria-label="toggle theme">&#9681;</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab is-active" data-view="overview">Overview</button>
+    <button class="tab" data-view="findings">Findings <span class="count" id="count-findings"></span></button>
+    <button class="tab" data-view="bench">Benchmarks</button>
+    <button class="tab" data-view="fixes">Fixes <span class="count" id="count-fixes"></span></button>
+    <button class="tab" data-view="activity">Activity</button>
+  </nav>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section class="view is-active" id="view-overview">
+      <div class="grid-2">
+        <div class="card score-card">
+          <div class="card-title">Overall score</div>
+          <div class="score-wrap">
+            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-track" cx="60" cy="60" r="50"/>
+              <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"/>
+            </svg>
+            <div class="ring-label"><span id="score">&mdash;</span><small>/ 100</small></div>
+          </div>
+          <div class="sev-row" id="sev-row"></div>
+          <p class="hint" id="score-hint">Measured from the checks, never estimated.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Checks <span class="muted" id="run-label"></span></div>
+          <ol class="pipeline" id="pipeline"></ol>
+          <div class="progress"><div class="progress-fill" id="progress"></div></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Scores by area</div>
+          <div id="areas" class="areas"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Score history <span class="muted">each run, including after fixes</span></div>
+          <div id="history" class="chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINDINGS -->
+    <section class="view" id="view-findings">
+      <div class="chips" id="chips">
+        <button class="chip is-active" data-filter="all">All</button>
+        <button class="chip" data-filter="critical">Critical</button>
+        <button class="chip" data-filter="high">High</button>
+        <button class="chip" data-filter="medium">Medium</button>
+        <button class="chip" data-filter="low">Low</button>
+        <button class="chip" data-filter="claude">From Claude</button>
+        <button class="chip" data-filter="fixable">Auto-fixable</button>
+      </div>
+      <div id="findings" class="findings"></div>
+    </section>
+
+    <!-- BENCHMARKS -->
+    <section class="view" id="view-bench">
+      <div id="bench" class="bench"></div>
+    </section>
+
+    <!-- FIXES -->
+    <section class="view" id="view-fixes">
+      <div class="card fix-bar">
+        <div>
+          <div class="card-title">Automatic fixes</div>
+          <p class="hint">Each fix is an exact edit, refused if the file changed or the result would not parse. Applying re-runs the audit so you see the effect.</p>
+        </div>
+        <div class="fix-actions">
+          <button id="fix-selected" class="btn">Apply selected</button>
+          <button id="fix-all" class="btn primary">Apply all</button>
+        </div>
+      </div>
+      <div id="fix-result"></div>
+      <div id="fixes" class="fixes"></div>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section class="view" id="view-activity">
+      <div class="card">
+        <div class="card-title">Activity</div>
+        <div id="log" class="log mono"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Local only &middot; served from your machine &middot; <span id="footer-version"></span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
